@@ -44,7 +44,7 @@ class ReservationController {
   }
 
   validateOrdersFormat(orders) {
-    const formatReg = /^([ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+-(1\d?|20),?)$/;
+    const formatReg = /^([ㄱ-ㅎㅏ-ㅣ가-힣]+-([1-9]|1\d|20),?)+$/;
 
     if (!isValidFormat(formatReg, orders))
       throwError(MESSAGES.errors.invalidOrders);
