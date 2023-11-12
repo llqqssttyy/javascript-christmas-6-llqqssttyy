@@ -1,5 +1,9 @@
+import Calendar from './Calendar.js';
+
 import MESSAGES from '../constants/messages.js';
-import { isNumberInRange } from '../utils/validators.js';
+import { EVENT_MONTH, EVENT_PERIOD, EVENT_YEAR } from '../constants/events.js';
+
+import { isInteger, isNumberInRange } from '../utils/validators.js';
 import throwError from '../utils/throwError.js';
 
 class EventPlanner {
@@ -12,7 +16,7 @@ class EventPlanner {
   constructor(date) {
     this.#validate(date);
     this.#visitDate = date;
-    this.#calendar = new Calendar(year, month);
+    this.#calendar = new Calendar(EVENT_YEAR, EVENT_MONTH);
   }
 
   #validate(date) {

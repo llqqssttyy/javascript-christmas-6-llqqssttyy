@@ -1,4 +1,5 @@
 import deepFreeze from '../utils/deepFreeze.js';
+import { EVENT_MONTH } from './events.js';
 
 const MESSAGES = deepFreeze({
   // InputView

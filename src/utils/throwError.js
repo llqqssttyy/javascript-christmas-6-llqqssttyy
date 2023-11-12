@@ -1,7 +1,7 @@
-import MESSAGE from '../constants/message.js';
+import MESSAGES from '../constants/messages.js';
 
 const throwError = (errMsg) => {
-  throw new Error(`${MESSAGE.errors.PREFIX} ${errMsg}`);
+  throw new Error(`${MESSAGES.errors.prefix} ${errMsg}`);
 };
 
 export default throwError;

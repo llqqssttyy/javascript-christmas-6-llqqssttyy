@@ -2,6 +2,7 @@ import InputView from '../InputView.js';
 import OutputView from '../OutputView.js';
 import MESSAGES from '../constants/messages.js';
 import EventPlanner from '../models/EventPlanner.js';
+import handleException from '../utils/handleException.js';
 import throwError from '../utils/throwError.js';
 import { isNumber, isValidFormat } from '../utils/validators.js';
 
@@ -21,7 +22,7 @@ class ReservationController {
     this.#outputView.printStart();
 
     await handleException(async () => await this.#getDate());
-    await handleException(async () => await this.#getOrders());
+    // await handleException(async () => await this.#getOrders());
   }
 
   async #getDate() {
@@ -39,7 +40,7 @@ class ReservationController {
   }
 
   validateDateType(date) {
-    if (!isNumber(date)) throwError(MESSAGES.errors.invalidNumber);
+    if (!isNumber(date)) throwError(MESSAGES.errors.invalidDate);
   }
 
   validateOrdersFormat(orders) {

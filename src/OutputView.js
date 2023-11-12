@@ -1,9 +1,9 @@
 import { Console } from '@woowacourse/mission-utils';
-import MESSAGES from './constants/messages';
+import MESSAGES from './constants/messages.js';
 
 const OutputView = {
   printStart() {
-    Console.print(MESSAGES.sayHi);
+    Console.print(MESSAGES.outputs.sayHi);
   },
 
   printMenu() {

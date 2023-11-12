@@ -1,6 +1,6 @@
-const EVENT_YEAR = 2023;
-const EVENT_MONTH = 12;
-const EVENT_PERIOD = {
+export const EVENT_YEAR = 2023;
+export const EVENT_MONTH = 12;
+export const EVENT_PERIOD = {
   startDate: 1,
   endDate: 31,
 };
@@ -10,7 +10,7 @@ const EVENT_TYPES = {
   present: 'PRESENT',
 };
 
-const CHRISTMAS_D_DAY = {
+export const CHRISTMAS_D_DAY = {
   period: {
     startDate: 1,
     endDate: 25,
@@ -34,7 +34,7 @@ const CHRISTMAS_D_DAY = {
   },
 };
 
-const SPECIAL = {
+export const SPECIAL = {
   dates: {
     everySunday(date) {
       const dayOfWeek = new Date(date).getDay();
