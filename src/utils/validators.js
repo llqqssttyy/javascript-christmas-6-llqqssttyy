@@ -1,3 +1,4 @@
+// Validate Numbers
 export const isNumber = (input) => {
   return Number.isNaN(input);
 };
@@ -12,4 +13,10 @@ export const isInteger = (number) => {
 
 export const isPositive = (number) => {
   return number > 0;
+};
+
+// Validate Strings
+export const isValidFormat = (regex, string) => {
+  const reg = new RegExp(regex);
+  return reg.test(string);
 };
