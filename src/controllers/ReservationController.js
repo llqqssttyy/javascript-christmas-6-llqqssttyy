@@ -1,5 +1,5 @@
-import InputView from '../InputView.js';
-import OutputView from '../OutputView.js';
+import InputView from '../views/InputView.js';
+import OutputView from '../views/OutputView.js';
 import MESSAGES from '../constants/messages.js';
 import EventPlanner from '../models/EventPlanner.js';
 import handleException from '../utils/handleException.js';
@@ -22,7 +22,7 @@ class ReservationController {
     this.#outputView.printStart();
 
     await handleException(async () => await this.#getDate());
-    // await handleException(async () => await this.#getOrders());
+    await handleException(async () => await this.#getOrders());
   }
 
   async #getDate() {
