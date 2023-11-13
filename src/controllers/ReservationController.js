@@ -25,6 +25,7 @@ class ReservationController {
     await handleException(async () => await this.#getOrders());
 
     this.#outputView.printMenus(this.#eventPlanner.menus);
+    this.#outputView.printOriginalPrice(this.#eventPlanner.originalPrice);
   }
 
   async #getDate() {

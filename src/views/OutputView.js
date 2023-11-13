@@ -7,10 +7,19 @@ const OutputView = {
   },
 
   printMenus(orders) {
-    Console.print(MESSAGES.outputs.eventPreview);
-    Console.print(MESSAGES.outputs.ordersTitle);
+    const { title, printMsg } = MESSAGES.outputs.menus;
 
-    Console.print(MESSAGES.outputs.printMenus(orders));
+    Console.print(MESSAGES.outputs.eventPreview);
+
+    Console.print(title);
+    Console.print(printMsg(orders));
+  },
+
+  printOriginalPrice(price) {
+    const { title, printMsg } = MESSAGES.outputs.originalPrice;
+
+    Console.print(title);
+    Console.print(printMsg(price));
   },
 };
 

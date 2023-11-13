@@ -42,7 +42,7 @@ class EventPlanner {
     return this.#receipt.menus;
   }
 
-  get originalTotalPrice() {
+  get originalPrice() {
     return this.#receipt.totalPrice;
   }
 }
