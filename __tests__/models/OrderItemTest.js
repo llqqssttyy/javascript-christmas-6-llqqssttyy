@@ -1,7 +1,7 @@
 import OrderItem from '../../src/models/OrderItem';
 
 describe('OrderItem 기능 테스트', () => {
-  test('validate - 정상 작동', async () => {
+  test('validate - 예외 처리', async () => {
     // given
     const INPUT = '치즈버거';
 
@@ -9,7 +9,15 @@ describe('OrderItem 기능 테스트', () => {
     expect(() => new OrderItem(INPUT, 3)).toThrow('[ERROR]');
   });
 
-  test('setCategory - 정상 작동', async () => {
+  test('validate - 통과', async () => {
+    // given
+    const INPUT = '치즈버거';
+
+    //then
+    expect(() => new OrderItem(INPUT, 3)).toThrow('[ERROR]');
+  });
+
+  test('접근자 프로퍼티 - item', async () => {
     // given
     const INPUT = '양송이수프';
     const AMOUNT = 3;
@@ -17,14 +25,26 @@ describe('OrderItem 기능 테스트', () => {
       category: '애피타이저',
       menu: INPUT,
       amount: AMOUNT,
-      totalPrice: 6000 * AMOUNT,
     };
 
     //when
     const orderItem = new OrderItem(INPUT, AMOUNT);
-    orderItem.setCategory(INPUT);
 
     //then
-    expect(orderItem.DTO).toEqual(RESULT);
+    expect(orderItem.item).toEqual(RESULT);
+  });
+
+  test('접근자 프로퍼티 - totalPrice', async () => {
+    // given
+    const INPUT = '양송이수프';
+    const PRICE = 6000;
+    const AMOUNT = 3;
+    const RESULT = PRICE * AMOUNT;
+
+    //when
+    const orderItem = new OrderItem(INPUT, AMOUNT);
+
+    //then
+    expect(orderItem.totalPrice).toEqual(RESULT);
   });
 });

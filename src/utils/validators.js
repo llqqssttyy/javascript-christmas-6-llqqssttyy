@@ -1,3 +1,6 @@
+import { CATEGORIES, MENUS } from '../constants/menus';
+import { getValueOfField } from './object';
+
 // Validate Numbers
 export const isNumber = (input) => {
   return !Number.isNaN(Number(input));
@@ -19,4 +22,11 @@ export const isPositive = (number) => {
 export const isValidFormat = (regex, string) => {
   const reg = new RegExp(regex);
   return reg.test(string);
+};
+
+// Validate OrderItem
+export const isMenuExists = (menu) => {
+  return !!CATEGORIES.find((category) =>
+    getValueOfField(MENUS, `${category}.${menu}`),
+  );
 };

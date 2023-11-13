@@ -5,7 +5,7 @@ export const MAIN_COURSES = '메인';
 export const DESSERTS = '디저트';
 export const BEVERAGES = '음료';
 
-export const categories = { APPETIZERS, MAIN_COURSES, DESSERTS, BEVERAGES };
+export const CATEGORIES = [APPETIZERS, MAIN_COURSES, DESSERTS, BEVERAGES];
 
 export const MENUS = deepFreeze({
   애피타이저: {

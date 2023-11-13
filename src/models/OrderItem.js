@@ -1,11 +1,11 @@
-import { MENUS } from '../constants/menus.js';
+import { CATEGORIES, MENUS } from '../constants/menus.js';
 import MESSAGES from '../constants/messages.js';
+
 import { getValueOfField } from '../utils/object.js';
 import throwError from '../utils/throwError.js';
+import { isMenuExists } from '../utils/validators.js';
 
 class OrderItem {
-  #category;
-
   #menu;
 
   #amount;
@@ -17,33 +17,29 @@ class OrderItem {
   }
 
   #validate(menu) {
-    if (!this.#isMenuExists(menu)) throwError(MESSAGES.errors.invalidMenu);
-  }
-
-  #isMenuExists(menu) {
-    this.setCategory(menu);
-    return !!this.#category;
-  }
-
-  setCategory(menu) {
-    const categories = Object.keys(MENUS);
-    this.#category = categories.find((category) =>
-      getValueOfField(MENUS, `${category}.${menu}`),
-    );
+    if (!isMenuExists(menu)) throwError(MESSAGES.errors.invalidMenu);
   }
 
   get totalPrice() {
-    const price = getValueOfField(MENUS, `${this.#category}.${this.#menu}`);
+    const price = getValueOfField(
+      MENUS,
+      `${this.#getCategory()}.${this.#menu}`,
+    );
     return price * this.#amount;
   }
 
-  get DTO() {
+  get item() {
     return {
-      category: this.#category,
+      category: this.#getCategory(),
       menu: this.#menu,
       amount: this.#amount,
-      totalPrice: this.totalPrice,
     };
+  }
+
+  #getCategory() {
+    return CATEGORIES.find((category) =>
+      getValueOfField(MENUS, `${category}.${this.#menu}`),
+    );
   }
 }
 
