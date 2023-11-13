@@ -6,13 +6,11 @@ const OutputView = {
     Console.print(MESSAGES.outputs.sayHi);
   },
 
-  printMenu(orders) {
+  printMenus(orders) {
     Console.print(MESSAGES.outputs.eventPreview);
     Console.print(MESSAGES.outputs.ordersTitle);
 
-    orders.map((order) => {
-      Console.print(MESSAGES.outputs.singleMenu(order));
-    });
+    Console.print(MESSAGES.outputs.printMenus(orders));
   },
 };
 

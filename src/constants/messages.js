@@ -15,7 +15,12 @@ const MESSAGES = deepFreeze({
 
     eventPreview: '12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n',
     ordersTitle: '<주문 메뉴>',
-    singleMenu: ({ menu, amount }) => `${menu} ${amount}개`,
+    printMenus: (orders) => {
+      return orders.reduce(
+        (acc, { menu, amount }) => acc + `${menu} ${amount}개\n`,
+        '',
+      );
+    },
   },
 
   // Error
