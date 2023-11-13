@@ -9,12 +9,14 @@ describe('OrderItem 기능 테스트', () => {
     expect(() => new OrderItem(INPUT, 3)).toThrow('[ERROR]');
   });
 
-  test('validate - 통과', async () => {
-    // given
-    const INPUT = '치즈버거';
-
+  test.each([
+    { menu: '양송이수프', amount: 1 },
+    { menu: '티본스테이크', amount: 1 },
+    { menu: '초코케이크', amount: 1 },
+    { menu: '레드와인', amount: 1 },
+  ])('validate - 통과', async ({ menu, amount }) => {
     //then
-    expect(() => new OrderItem(INPUT, 3)).toThrow('[ERROR]');
+    expect(() => new OrderItem(menu, amount)).not.toThrow('[ERROR]');
   });
 
   test('접근자 프로퍼티 - item', async () => {
