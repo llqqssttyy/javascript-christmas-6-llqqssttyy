@@ -1,5 +1,3 @@
-import { MENUS } from '../../src/constants/menus';
-import MESSAGES from '../../src/constants/messages';
 import Receipt from '../../src/models/Receipt';
 
 describe('Recipt 클래스 기능 테스트', () => {
@@ -22,8 +20,9 @@ describe('Recipt 클래스 기능 테스트', () => {
 
   test('validator 테스트 - 통과', () => {
     const INPUT = [
-      { menu: '양송이수프', amount: 1 },
-      { menu: '타파스', amount: 1 },
+      { menu: '해산물파스타', amount: 2 },
+      { menu: '레드와인', amount: 1 },
+      { menu: '초코케이크', amount: 1 },
     ];
 
     expect(() => new Receipt(INPUT)).not.toThrow('[ERROR]');
@@ -61,5 +60,19 @@ describe('Recipt 클래스 기능 테스트', () => {
     receipt.generateOrders(INPUT);
 
     expect(receipt.totalPrice).toEqual(RESULT);
+  });
+
+  test('접근자 프로퍼티 테스트 - menus', async () => {
+    const INPUT = [
+      { menu: '양송이수프', amount: 1 },
+      { menu: '타파스', amount: 1 },
+      { menu: '바비큐립', amount: 1 },
+    ];
+    const RESULT = INPUT;
+
+    const receipt = new Receipt(INPUT);
+    receipt.generateOrders(INPUT);
+
+    expect(receipt.menus).toEqual(RESULT);
   });
 });

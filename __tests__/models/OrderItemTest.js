@@ -13,6 +13,7 @@ describe('OrderItem 기능 테스트', () => {
     { menu: '양송이수프', amount: 1 },
     { menu: '티본스테이크', amount: 1 },
     { menu: '초코케이크', amount: 1 },
+    { menu: '해산물파스타', amount: 2 },
     { menu: '레드와인', amount: 1 },
   ])('validate - 통과', async ({ menu, amount }) => {
     //then

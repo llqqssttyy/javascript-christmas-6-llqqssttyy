@@ -1,5 +1,5 @@
-import { CATEGORIES, MENUS } from '../constants/menus';
-import { getValueOfField } from './object';
+import { BEVERAGES, CATEGORIES, MENUS } from '../constants/menus.js';
+import { getValueOfField } from './object.js';
 
 // Validate Numbers
 export const isNumber = (input) => {
@@ -26,7 +26,31 @@ export const isValidFormat = (regex, string) => {
 
 // Validate OrderItem
 export const isMenuExists = (menu) => {
-  return !!CATEGORIES.find((category) =>
+  return CATEGORIES.find((category) =>
     getValueOfField(MENUS, `${category}.${menu}`),
   );
+};
+
+// Validate Receipt
+export const isTotalAmountOfMenusValid = (orders) => {
+  const totalAmount = orders.reduce((acc, { amount }) => acc + amount, 0);
+  return totalAmount <= 20;
+};
+
+export const hasDuplicatedMenu = (orders) => {
+  const set = new Set();
+
+  orders.forEach(({ menu }) => {
+    set.add(menu);
+  });
+
+  return set.size !== orders.length;
+};
+
+export const hasOnlyBeverages = (orders) => {
+  const beverages = orders.filter(({ menu }) => {
+    return Object.keys(MENUS[BEVERAGES]).includes(menu);
+  });
+
+  return beverages.length === orders.length;
 };

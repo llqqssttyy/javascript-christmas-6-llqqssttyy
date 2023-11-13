@@ -6,8 +6,13 @@ const OutputView = {
     Console.print(MESSAGES.outputs.sayHi);
   },
 
-  printMenu() {
-    Console.print('<주문 메뉴>');
+  printMenu(orders) {
+    Console.print(MESSAGES.outputs.eventPreview);
+    Console.print(MESSAGES.outputs.ordersTitle);
+
+    orders.map((order) => {
+      Console.print(MESSAGES.outputs.singleMenu(order));
+    });
   },
 };
 

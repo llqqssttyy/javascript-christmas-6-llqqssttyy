@@ -56,6 +56,13 @@ class Receipt {
 
     return receipt;
   }
+
+  get menus() {
+    return this.#orderItems.map((orderItem) => {
+      const { menu, amount } = orderItem.item;
+      return { menu, amount };
+    });
+  }
 }
 
 export default Receipt;

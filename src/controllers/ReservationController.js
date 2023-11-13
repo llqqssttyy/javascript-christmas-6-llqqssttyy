@@ -23,12 +23,14 @@ class ReservationController {
 
     await handleException(async () => await this.#getDate());
     await handleException(async () => await this.#getOrders());
+
+    this.#outputView.printMenu(this.#eventPlanner.menus);
   }
 
   async #getDate() {
     const date = await this.#inputView.readDate();
 
-    this.validateDateType(date);
+    this.#validateDateType(date);
 
     this.#eventPlanner = new EventPlanner(Number(date));
   }
@@ -36,18 +38,28 @@ class ReservationController {
   async #getOrders() {
     const orders = await this.#inputView.readOrders();
 
-    this.validateOrdersFormat(orders);
+    this.#validateOrdersFormat(orders);
+
+    const processedOrders = this.#processOrders(orders);
+    await this.#eventPlanner.generateReceipt(processedOrders);
   }
 
-  validateDateType(date) {
+  #validateDateType(date) {
     if (!isNumber(date)) throwError(MESSAGES.errors.invalidDate);
   }
 
-  validateOrdersFormat(orders) {
+  #validateOrdersFormat(orders) {
     const formatReg = /^([ㄱ-ㅎㅏ-ㅣ가-힣]+-([1-9]|1\d|20),?)+$/;
 
     if (!isValidFormat(formatReg, orders))
       throwError(MESSAGES.errors.invalidOrders);
+  }
+
+  #processOrders(orders) {
+    return orders.split(',').map((order) => {
+      const [menu, amount] = order.split('-');
+      return { menu, amount: Number(amount) };
+    });
   }
 }
 
