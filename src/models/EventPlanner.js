@@ -1,4 +1,4 @@
-import Calendar from './Calendar.js';
+import EventCalendar from './EventCalendar.js';
 import Receipt from './Receipt.js';
 
 import MESSAGES from '../constants/messages.js';
@@ -10,7 +10,7 @@ import throwError from '../utils/throwError.js';
 class EventPlanner {
   #visitDate;
 
-  #calendar;
+  #eventCalendar;
 
   #receipt;
 
@@ -19,7 +19,7 @@ class EventPlanner {
   constructor(date) {
     this.#validate(date);
     this.#visitDate = date;
-    this.#calendar = new Calendar(EVENT_YEAR, EVENT_MONTH);
+    this.#eventCalendar = new EventCalendar(EVENT_YEAR, EVENT_MONTH);
   }
 
   #validate(date) {
@@ -36,7 +36,10 @@ class EventPlanner {
     this.#receipt.generateOrders(orders);
   }
 
-  generateEvents() {}
+  generateEvents() {
+    this.#eventCalendar.findAvailableEvents(this.#visitDate);
+    this.#events = this.#eventCalendar.events;
+  }
 
   get menus() {
     return this.#receipt.menus;

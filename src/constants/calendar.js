@@ -11,10 +11,4 @@ export const SATURDAY = 6;
 export const CHRISTMAS = 'christmas';
 
 // 공휴일 목록
-export const HOLIDAYS = [
-  {
-    name: CHRISTMAS,
-    month: 12,
-    date: 25,
-  },
-];
+export const SPECIAL_DATES = Object.freeze([3, 10, 17, 24, 25, 31]);
