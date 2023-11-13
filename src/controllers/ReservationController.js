@@ -1,9 +1,12 @@
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
-import MESSAGES from '../constants/messages.js';
 import EventPlanner from '../models/EventPlanner.js';
-import handleException from '../utils/handleException.js';
+
+import MESSAGES from '../constants/messages.js';
+import { ORDER_REGEX } from '../constants/constants.js';
+
 import throwError from '../utils/throwError.js';
+import handleException from '../utils/handleException.js';
 import { isNumber, isValidFormat } from '../utils/validators.js';
 
 class ReservationController {
@@ -50,9 +53,7 @@ class ReservationController {
   }
 
   #validateOrdersFormat(orders) {
-    const formatReg = /^([ㄱ-ㅎㅏ-ㅣ가-힣]+-([1-9]|1\d|20),?)+$/;
-
-    if (!isValidFormat(formatReg, orders))
+    if (!isValidFormat(ORDER_REGEX, orders))
       throwError(MESSAGES.errors.invalidOrders);
   }
 
