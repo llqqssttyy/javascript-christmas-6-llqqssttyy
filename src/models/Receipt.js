@@ -1,66 +1,60 @@
-import { BEVERAGES, MENUS } from '../constants/menus';
-import MESSAGES from '../constants/messages';
-import throwError from '../utils/throwError';
-import OrderItem from './OrderItem';
+import OrderItem from './OrderItem.js';
+
+import MESSAGES from '../constants/messages.js';
+
+import throwError from '../utils/throwError.js';
+import {
+  hasDuplicatedMenu,
+  hasOnlyBeverages,
+  isTotalAmountOfMenusValid,
+} from '../utils/validators.js';
 
 class Receipt {
   #orders;
 
-  #totalPrice;
+  #orderItems;
 
   constructor(orders) {
-    if (!this.#validate(orders)) throwError(MESSAGES.errors.invalidOrders);
+    this.#validate(orders);
+    this.#orders = orders;
+    this.#orderItems = [];
+  }
 
-    this.#orders = this.#generateOrders(orders);
-    this.#totalPrice = this.#caculateTotalPrice();
+  #validate(orders) {
+    if (!isTotalAmountOfMenusValid(orders))
+      throwError(MESSAGES.errors.invalidOrders);
+
+    if (hasDuplicatedMenu(orders)) throwError(MESSAGES.errors.invalidOrders);
+
+    if (hasOnlyBeverages(orders)) throwError(MESSAGES.errors.invalidOrders);
+  }
+
+  generateOrders() {
+    this.#orderItems = this.#orders.map(
+      ({ menu, amount }) => new OrderItem(menu, amount),
+    );
   }
 
   get totalPrice() {
-    return this.#totalPrice;
-  }
-
-  #generateOrders(orders) {
-    return orders.map(({ menu, amount }) => {
-      this.#orders.push(new OrderItem(menu, amount));
-    });
-  }
-
-  #caculateTotalPrice() {
-    return this.#orders?.reduce((totalPrice, orderItem) => {
-      totalPrice += orderItem.totalPrice;
+    return this.#orderItems.reduce((totalPrice, orderItem) => {
+      return totalPrice + orderItem.totalPrice;
     }, 0);
   }
 
-  // validators
-  #validate(orders) {
-    if (this.#totalAmountOfMenus(orders) >= 21) return false;
+  get receipt() {
+    const receipt = {};
 
-    if (this.#hasDuplicatedMenu(orders)) return false;
+    this.#orderItems.forEach((orderItem) => {
+      const { category, menu, amount } = orderItem.item;
 
-    if (this.#hasOnlyBeverages(orders)) return false;
+      if (!Array.isArray(receipt[category])) {
+        receipt[category] = [];
+      }
 
-    return true;
-  }
-
-  #totalAmountOfMenus(orders) {
-    return orders.reduce((acc, { amount }) => acc + amount, 0);
-  }
-
-  #hasDuplicatedMenu(orders) {
-    const set = new Set();
-
-    orders.forEach(({ menu }) => {
-      set.add(menu);
-    });
-    return set.size !== orders.length;
-  }
-
-  #hasOnlyBeverages(orders) {
-    const beverages = orders.filter(({ menu }) => {
-      return Object.keys(MENUS[BEVERAGES]).includes(menu);
+      receipt[category].push({ menu, amount });
     });
 
-    return beverages.length === orders.length;
+    return receipt;
   }
 }
 
