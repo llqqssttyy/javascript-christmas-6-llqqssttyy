@@ -1,4 +1,4 @@
-import OrderItem from '../../src/models/Order';
+import OrderItem from '../../src/models/OrderItem';
 
 describe('OrderItem 기능 테스트', () => {
   test('validate - 정상 작동', async () => {
@@ -9,19 +9,22 @@ describe('OrderItem 기능 테스트', () => {
     expect(() => new OrderItem(INPUT, 3)).toThrow('[ERROR]');
   });
 
-  test('findMenu - 정상 작동', async () => {
+  test('setCategory - 정상 작동', async () => {
     // given
     const INPUT = '양송이수프';
+    const AMOUNT = 3;
     const RESULT = {
       category: '애피타이저',
       menu: INPUT,
-      price: 6_000,
+      amount: AMOUNT,
+      totalPrice: 6000 * AMOUNT,
     };
 
     //when
-    const orderItem = new OrderItem(INPUT, 3);
+    const orderItem = new OrderItem(INPUT, AMOUNT);
+    orderItem.setCategory(INPUT);
 
     //then
-    expect(orderItem.findMenu(INPUT)).toEqual(RESULT);
+    expect(orderItem.DTO).toEqual(RESULT);
   });
 });
