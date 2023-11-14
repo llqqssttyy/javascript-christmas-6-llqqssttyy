@@ -66,7 +66,6 @@ class EventPlanner {
           type === BENEFIT_TYPE.gift ? gift : discountAmount(state);
       },
     );
-    console.log(this.#benefits);
   }
 
   // 주문 메뉴
@@ -80,7 +79,9 @@ class EventPlanner {
   }
 
   // 증정 메뉴
-  get gift() {}
+  get gift() {
+    return this.#benefits['GIFT'];
+  }
 
   // 혜택 내역
   get benefits() {

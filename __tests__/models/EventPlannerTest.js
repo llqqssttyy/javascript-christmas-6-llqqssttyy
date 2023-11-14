@@ -25,7 +25,19 @@ describe('EventPlanner 기능 테스트', () => {
   });
 });
 
-describe('EventPlanner generateBenefits 테스트', () => {
+describe('EventPlanner 혜택 조회 테스트', () => {
+  test('접근자 프로퍼티 테스트 - gift', async () => {
+    const gift = {
+      menu: '샴페인',
+      amount: 1,
+      price: 25_000,
+    };
+
+    const eventPlanner = await getEventPlanner();
+
+    expect(eventPlanner.gift).toEqual(gift);
+  });
+
   test('접근자 프로퍼티 테스트 - benefits', async () => {
     const benefits = {
       CHRISTMAS_D_DAY: 3400,
