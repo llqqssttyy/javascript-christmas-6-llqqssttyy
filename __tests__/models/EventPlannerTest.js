@@ -62,4 +62,13 @@ describe('EventPlanner 혜택 조회 테스트', () => {
 
     expect(eventPlanner.totalBenefitMoney).toBe(totalBenefitMoney);
   });
+
+  test('접근자 프로퍼티 테스트 - payment', async () => {
+    const originalPrice = 141_500;
+    const discountAmount = 8_446;
+
+    const eventPlanner = await getEventPlanner();
+
+    expect(eventPlanner.payment).toBe(originalPrice - discountAmount);
+  });
 });

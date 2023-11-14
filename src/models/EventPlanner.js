@@ -1,13 +1,13 @@
 import EventCalendar from './EventCalendar.js';
 import Receipt from './Receipt.js';
 
-import MESSAGES from '../constants/messages.js';
 import {
   BENEFIT_TYPE,
   EVENT_MONTH,
   EVENT_PERIOD,
   EVENT_YEAR,
 } from '../constants/events.js';
+import MESSAGES from '../constants/messages.js';
 
 import { isInteger, isNumberInRange } from '../utils/validators.js';
 import throwError from '../utils/throwError.js';
@@ -55,15 +55,15 @@ class EventPlanner {
   }
 
   #setBenefits() {
+    const conditions = {
+      orderCntByCategory: this.#receipt.orderCntByCategory,
+      date: this.#visitDate,
+    };
+
     Object.entries(this.#eventCalendar.availableEvents).forEach(
       ([eventName, { type, discountAmount, gift }]) => {
-        const state = {
-          date: this.#visitDate,
-          orderCntByCategory: this.#receipt.orderCntByCategory,
-        };
-
         this.#benefits[eventName] =
-          type === BENEFIT_TYPE.gift ? gift : discountAmount(state);
+          type === BENEFIT_TYPE.gift ? gift : discountAmount(conditions);
       },
     );
   }
@@ -90,14 +90,25 @@ class EventPlanner {
 
   // 총 혜택 금액
   get totalBenefitMoney() {
-    return Object.entries(this.#benefits).reduce((acc, [name, benefit]) => {
-      if (name === 'GIFT') return acc + benefit.price;
-      return acc + benefit;
-    }, 0);
+    return Object.entries(this.#benefits).reduce(
+      (acc, [eventName, benefit]) => {
+        return eventName === 'GIFT' ? acc + benefit.price : acc + benefit;
+      },
+      0,
+    );
   }
 
   // 할인 후 예상 결제 금액
-  get payment() {}
+  get payment() {
+    const discountAmount = Object.entries(this.#benefits).reduce(
+      (acc, [eventName, benefit]) => {
+        return eventName !== 'GIFT' ? acc + benefit : acc;
+      },
+      0,
+    );
+
+    return this.originalPrice - discountAmount;
+  }
 
   // 12월 이벤트 배지
   get badge() {}
