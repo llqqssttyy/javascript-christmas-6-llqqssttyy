@@ -7,20 +7,21 @@ import {
 import EventCalendar from '../../src/models/EventCalendar';
 
 describe('EventCalendar 테스트', () => {
-  test('findAvailableEvents 기능 테스트', () => {
+  test('getEventBenefit 기능 테스트', () => {
     const YEAR = 2023;
     const MONTH = 12;
     const DATE = 25;
-    const RESULT = [
-      CHRISTMAS_D_DAY.getBenefit,
-      SPECIAL.getBenefit,
-      WEEKDAY.getBenefit,
-      GIFT.getBenefit,
-    ];
+    const TOTALPRICE = 130_000;
+    const RESULT = {
+      CHRISTMAS_D_DAY: CHRISTMAS_D_DAY.getBenefit,
+      SPECIAL: SPECIAL.getBenefit,
+      WEEKDAY: WEEKDAY.getBenefit,
+      GIFT: GIFT.getBenefit,
+    };
 
     const eventCalendar = new EventCalendar(YEAR, MONTH);
-    eventCalendar.findAvailableEvents(DATE);
+    eventCalendar.setAvailableEvents(DATE, TOTALPRICE);
 
-    expect(eventCalendar.events).toEqual(RESULT);
+    expect(eventCalendar.availableEvents).toEqual(RESULT);
   });
 });

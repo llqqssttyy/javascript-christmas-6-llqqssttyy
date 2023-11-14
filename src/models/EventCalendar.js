@@ -6,27 +6,32 @@ class EventCalendar {
 
   #month;
 
-  #events;
+  #availableEvents;
 
   constructor(year, month) {
     this.#year = year;
     this.#month = month;
-    this.#events = [];
+    this.#availableEvents = {};
   }
 
-  async findAvailableEvents(date) {
-    const info = {
+  async setAvailableEvents(date, totalPrice) {
+    const state = this.#getState(date, totalPrice);
+
+    await Object.keys(ALL_EVENTS).forEach((eventName) => {
+      const event = ALL_EVENTS[eventName];
+
+      if (event.isEventAvailable(state))
+        this.#availableEvents[eventName] = event.getBenefit;
+    });
+  }
+
+  #getState(date, totalPrice) {
+    return {
       isWeekend: this.#isWeekend(date),
       isSpecialDate: this.#isSpecialDate(date),
       isChristmasPeriod: this.#isChristmasPeriod(date),
+      totalPrice,
     };
-
-    await Object.keys(ALL_EVENTS).forEach((event) => {
-      const eventObj = ALL_EVENTS[event];
-
-      if (eventObj.isEventAvailable(info))
-        return this.#events.push(eventObj.getBenefit);
-    });
   }
 
   #isWeekend(date) {
@@ -43,8 +48,8 @@ class EventCalendar {
     return date >= startDate && date <= endDate;
   }
 
-  get events() {
-    return this.#events;
+  get availableEvents() {
+    return this.#availableEvents;
   }
 }
 
