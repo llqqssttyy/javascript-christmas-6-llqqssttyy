@@ -36,3 +36,7 @@ export const getValueOfField = (obj, field) => {
     return curObj ? curObj[curKey] : null;
   }, obj);
 };
+
+export const isEmptyObject = (obj) => {
+  return JSON.stringify(obj) === '{}';
+};
