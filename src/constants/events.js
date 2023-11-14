@@ -14,12 +14,13 @@ export const BENEFIT_TYPE = Object.freeze({
 });
 
 export const CHRISTMAS_D_DAY = {
-  baseDiscountAmount: 1_000,
-  additionalDiscountAmount: 100,
   type: BENEFIT_TYPE.totalDiscount,
 
-  discountAmount(date) {
-    return this.baseDiscountAmount + this.additionalDiscountAmount * (date - 1);
+  discountAmount({ date }) {
+    const baseAmount = 1000;
+    const weightAmount = 100;
+
+    return baseAmount + weightAmount * (date - 1);
   },
 
   getBenefit() {
@@ -35,11 +36,11 @@ export const CHRISTMAS_D_DAY = {
 };
 
 export const SPECIAL = {
-  baseDiscountAmount: 1_000,
   type: BENEFIT_TYPE.totalDiscount,
 
   discountAmount() {
-    return this.discountAmount;
+    const discountAmount = 1_000;
+    return discountAmount;
   },
 
   getBenefit() {
@@ -55,14 +56,11 @@ export const SPECIAL = {
 };
 
 export const WEEKDAY = {
-  baseDiscountAmount: 2_023,
   type: BENEFIT_TYPE.menuDiscount,
 
-  discountAmount(orders) {
-    return orders.reduce((acc, order) => {
-      if (order.category === DESSERTS)
-        return acc + order.price * this.baseDiscountAmount;
-    }, 0);
+  discountAmount({ orderCntByCategory }) {
+    const discountAmount = 2_023;
+    return orderCntByCategory[DESSERTS] * discountAmount;
   },
 
   getBenefit() {
@@ -72,20 +70,17 @@ export const WEEKDAY = {
     };
   },
 
-  isEventAvailable({ isWeekend }) {
-    return isWeekend === false;
+  isEventAvailable({ isWeekend, orderCategories }) {
+    return isWeekend === false && orderCategories.includes(DESSERTS);
   },
 };
 
 export const WEEKEND = {
-  baseDiscountAmount: 2_023,
   type: BENEFIT_TYPE.menuDiscount,
 
-  discountAmount(orders) {
-    return orders.reduce((acc, order) => {
-      if (order.category === MAIN_COURSES)
-        return acc + order.price * this.baseDiscountAmount;
-    }, 0);
+  discountAmount({ orderCntByCategory }) {
+    const discountAmount = 2_023;
+    return orderCntByCategory[MAIN_COURSES] * discountAmount;
   },
 
   getBenefit() {
@@ -95,8 +90,8 @@ export const WEEKEND = {
     };
   },
 
-  isEventAvailable({ isWeekend }) {
-    return isWeekend === true;
+  isEventAvailable({ isWeekend, orderCategories }) {
+    return isWeekend === true && orderCategories.includes(MAIN_COURSES);
   },
 };
 
