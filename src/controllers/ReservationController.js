@@ -31,7 +31,9 @@ class ReservationController {
 
     await this.#eventPlanner.generateBenefits();
 
-    this.#printBenefitResult();
+    await this.#printBenefitResult();
+
+    this.#printBadge();
   }
 
   // use InputView
@@ -70,6 +72,11 @@ class ReservationController {
 
     const payment = await this.#eventPlanner.payment;
     this.#outputView.printPayment(payment);
+  }
+
+  async #printBadge() {
+    const badge = await this.#eventPlanner.badge;
+    this.#outputView.printBadge(badge);
   }
 
   // validators

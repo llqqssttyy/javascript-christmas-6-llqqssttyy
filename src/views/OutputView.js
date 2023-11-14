@@ -38,6 +38,10 @@ const OutputView = {
   printPayment(money) {
     this.printResult(MESSAGES.outputs.payment, money);
   },
+
+  printBadge(badge) {
+    this.printResult(MESSAGES.outputs.badge, badge);
+  },
 };
 
 export default OutputView;
