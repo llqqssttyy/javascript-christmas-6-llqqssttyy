@@ -61,6 +61,9 @@ class ReservationController {
 
     const gift = await this.#eventPlanner.gift;
     this.#outputView.printGift(gift);
+
+    const benefits = await this.#eventPlanner.benefits;
+    this.#outputView.printBenefits(benefits);
   }
 
   // validators

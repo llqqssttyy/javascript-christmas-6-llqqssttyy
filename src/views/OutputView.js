@@ -26,6 +26,10 @@ const OutputView = {
   printGift(gift) {
     this.printResult(MESSAGES.outputs.gift, gift);
   },
+
+  printBenefits(benefits) {
+    this.printResult(MESSAGES.outputs.benefits, benefits);
+  },
 };
 
 export default OutputView;

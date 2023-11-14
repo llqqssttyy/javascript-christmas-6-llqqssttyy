@@ -33,20 +33,27 @@ const MESSAGES = deepFreeze({
     gift: {
       title: '<증정 메뉴>',
       printMsg: (gift) => {
-        if (!gift) return '없음';
+        if (!gift) return '없음\n';
 
-        return `${gift.menu} ${gift.amount}개`;
+        return `${gift.menu} ${gift.amount}개\n`;
       },
     },
 
     benefits: {
       title: '<혜택 내역>',
       printMsg: (benefits) => {
-        if (!benefits) return '없음';
+        if (!benefits) return '없음\n';
 
-        return Object.entries(benefits).reduce((acc, [eventName, price]) => {
+        return Object.entries(benefits).reduce((acc, [eventName, benefit]) => {
+          if (eventName === 'GIFT')
+            return (
+              acc +
+              `${
+                EVENT_NAMES[eventName]
+              }: -${benefit.price.toLocaleString()}원\n`
+            );
           return (
-            acc + `${EVENT_NAMES[eventName]}: -${price.toLocaleString()}원`
+            acc + `${EVENT_NAMES[eventName]}: -${benefit.toLocaleString()}원\n`
           );
         }, '');
       },
@@ -55,15 +62,15 @@ const MESSAGES = deepFreeze({
     totalBenefitMoney: {
       title: '<총혜택 금액>',
       printMsg: (money) => {
-        if (!money) return '0원';
+        if (!money) return '0원\n';
 
-        return `-${money.toLocaleString()}원`;
+        return `-${money.toLocaleString()}원\n`;
       },
     },
 
     payment: {
       title: '<할인 후 예상 결제 금액>',
-      printMsg: (money) => `${money.toLocaleString()}원`,
+      printMsg: (money) => `${money.toLocaleString()}원\n`,
     },
 
     badge: {
