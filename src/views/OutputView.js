@@ -2,31 +2,29 @@ import { Console } from '@woowacourse/mission-utils';
 import MESSAGES from '../constants/messages.js';
 
 const OutputView = {
+  printResult(msgObj, result) {
+    const { title, printMsg } = msgObj;
+
+    Console.print(title);
+    Console.print(printMsg(result));
+  },
+
   printStart() {
     Console.print(MESSAGES.outputs.sayHi);
   },
 
   printMenus(orders) {
-    const { title, printMsg } = MESSAGES.outputs.menus;
-
     Console.print(MESSAGES.outputs.eventPreview);
 
-    Console.print(title);
-    Console.print(printMsg(orders));
+    this.printResult(MESSAGES.outputs.menus, orders);
   },
 
   printOriginalPrice(price) {
-    const { title, printMsg } = MESSAGES.outputs.originalPrice;
-
-    Console.print(title);
-    Console.print(printMsg(price));
+    this.printResult(MESSAGES.outputs.originalPrice, price);
   },
 
   printGift(gift) {
-    const { title, printMsg } = MESSAGES.outputs.gift;
-
-    Console.print(title);
-    Console.print(printMsg(gift));
+    this.printResult(MESSAGES.outputs.gift, gift);
   },
 };
 
