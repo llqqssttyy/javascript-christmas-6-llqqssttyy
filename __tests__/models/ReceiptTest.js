@@ -28,6 +28,20 @@ describe('Recipt 클래스 기능 테스트', () => {
     expect(() => new Receipt(INPUT)).not.toThrow('[ERROR]');
   });
 
+  test('접근자 프로퍼티 테스트 - totalPrice', async () => {
+    const INPUT = [
+      { menu: '양송이수프', amount: 1 },
+      { menu: '타파스', amount: 1 },
+      { menu: '바비큐립', amount: 1 },
+    ];
+    const RESULT = 6000 + 5500 + 54000;
+
+    const receipt = new Receipt(INPUT);
+    receipt.generateOrders(INPUT);
+
+    expect(receipt.totalPrice).toEqual(RESULT);
+  });
+
   test('접근자 프로퍼티 테스트 - receipt', async () => {
     const INPUT = [
       { menu: '양송이수프', amount: 1 },
@@ -48,18 +62,21 @@ describe('Recipt 클래스 기능 테스트', () => {
     expect(receipt.receipt).toEqual(RESULT);
   });
 
-  test('접근자 프로퍼티 테스트 - totalPrice', async () => {
+  test('접근자 프로퍼티 테스트 - orderCntByCategory', async () => {
     const INPUT = [
       { menu: '양송이수프', amount: 1 },
       { menu: '타파스', amount: 1 },
       { menu: '바비큐립', amount: 1 },
     ];
-    const RESULT = 6000 + 5500 + 54000;
+    const RESULT = {
+      애피타이저: 2,
+      메인: 1,
+    };
 
     const receipt = new Receipt(INPUT);
     receipt.generateOrders(INPUT);
 
-    expect(receipt.totalPrice).toEqual(RESULT);
+    expect(receipt.orderCntByCategory).toEqual(RESULT);
   });
 
   test('접근자 프로퍼티 테스트 - menus', async () => {

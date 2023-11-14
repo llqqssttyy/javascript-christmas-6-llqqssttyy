@@ -57,6 +57,20 @@ class Receipt {
     return receipt;
   }
 
+  get orderCntByCategory() {
+    const orderCnt = {};
+
+    this.#orderItems.forEach((orderItem) => {
+      const { category, amount } = orderItem.item;
+
+      if (!orderCnt[category]) orderCnt[category] = 0;
+
+      orderCnt[category] += amount;
+    });
+
+    return orderCnt;
+  }
+
   get menus() {
     return this.#orderItems.map((orderItem) => {
       const { menu, amount } = orderItem.item;
