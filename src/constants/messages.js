@@ -1,5 +1,5 @@
 import deepFreeze from '../utils/deepFreeze.js';
-import { EVENT_MONTH } from './events.js';
+import { EVENT_MONTH, EVENT_NAMES } from './events.js';
 
 const MESSAGES = deepFreeze({
   // InputView
@@ -28,6 +28,47 @@ const MESSAGES = deepFreeze({
     originalPrice: {
       title: '<할인 전 총주문 금액>',
       printMsg: (price) => `${price.toLocaleString()}원\n`,
+    },
+
+    gift: {
+      title: '<증정 메뉴>',
+      printMsg: (gift) => {
+        if (!gift) return '없음';
+
+        return `${gift.menu} ${gift.amount}개`;
+      },
+    },
+
+    benefits: {
+      title: '<혜택 내역>',
+      printMsg: (benefits) => {
+        if (!benefits) return '없음';
+
+        return Object.entries(benefits).reduce((acc, [eventName, price]) => {
+          return (
+            acc + `${EVENT_NAMES[eventName]}: -${price.toLocaleString()}원`
+          );
+        }, '');
+      },
+    },
+
+    totalBenefitMoney: {
+      title: '<총혜택 금액>',
+      printMsg: (money) => {
+        if (!money) return '0원';
+
+        return `-${money.toLocaleString()}원`;
+      },
+    },
+
+    payment: {
+      title: '<할인 후 예상 결제 금액>',
+      printMsg: (money) => `${money.toLocaleString()}원`,
+    },
+
+    badge: {
+      title: '<12월 이벤트 배지>',
+      printMsg: (badge) => `${badge}`,
     },
   },
 

@@ -27,10 +27,12 @@ class ReservationController {
     await handleException(async () => await this.#getDate());
     await handleException(async () => await this.#getOrders());
 
-    this.#outputView.printMenus(this.#eventPlanner.menus);
-    this.#outputView.printOriginalPrice(this.#eventPlanner.originalPrice);
+    this.#printOrderResult();
+
+    this.#printBenefitResult();
   }
 
+  // use InputView
   async #getDate() {
     const date = await this.#inputView.readDate();
 
@@ -48,6 +50,20 @@ class ReservationController {
     await this.#eventPlanner.generateReceipt(processedOrders);
   }
 
+  // use OutputView
+  #printOrderResult() {
+    this.#outputView.printMenus(this.#eventPlanner.menus);
+    this.#outputView.printOriginalPrice(this.#eventPlanner.originalPrice);
+  }
+
+  async #printBenefitResult() {
+    await this.#eventPlanner.generateBenefits();
+
+    const gift = await this.#eventPlanner.gift;
+    this.#outputView.printGift(gift);
+  }
+
+  // validators
   #validateDateType(date) {
     if (!isNumber(date)) throwError(MESSAGES.errors.invalidDate);
   }
@@ -57,6 +73,7 @@ class ReservationController {
       throwError(MESSAGES.errors.invalidOrders);
   }
 
+  // data processer
   #processOrders(orders) {
     return orders.split(',').map((order) => {
       const [menu, amount] = order.split('-');

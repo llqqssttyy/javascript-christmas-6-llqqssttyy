@@ -21,6 +21,13 @@ const OutputView = {
     Console.print(title);
     Console.print(printMsg(price));
   },
+
+  printGift(gift) {
+    const { title, printMsg } = MESSAGES.outputs.gift;
+
+    Console.print(title);
+    Console.print(printMsg(gift));
+  },
 };
 
 export default OutputView;
