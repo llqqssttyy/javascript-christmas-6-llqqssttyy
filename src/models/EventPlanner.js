@@ -68,6 +68,16 @@ class EventPlanner {
     );
   }
 
+  #getBadge() {
+    const money = this.totalBenefitMoney;
+
+    if (money >= 20_000) return '산타';
+
+    if (money >= 10_000) return '트리';
+
+    if (money >= 5000) return '별';
+  }
+
   // 주문 메뉴
   get menus() {
     return this.#receipt.menus;
@@ -111,7 +121,9 @@ class EventPlanner {
   }
 
   // 12월 이벤트 배지
-  get badge() {}
+  get badge() {
+    return this.#getBadge();
+  }
 }
 
 export default EventPlanner;

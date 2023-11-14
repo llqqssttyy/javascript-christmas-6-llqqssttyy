@@ -71,4 +71,12 @@ describe('EventPlanner 혜택 조회 테스트', () => {
 
     expect(eventPlanner.payment).toBe(originalPrice - discountAmount);
   });
+
+  test('접근자 프로퍼티 테스트 - badge', async () => {
+    const badge = '산타';
+
+    const eventPlanner = await getEventPlanner();
+
+    expect(eventPlanner.badge).toBe(badge);
+  });
 });
