@@ -1,3 +1,5 @@
+import { DESSERTS, MAIN_COURSES } from './menus';
+
 export const EVENT_YEAR = 2023;
 export const EVENT_MONTH = 12;
 export const EVENT_PERIOD = Object.freeze({
@@ -6,21 +8,24 @@ export const EVENT_PERIOD = Object.freeze({
 });
 
 export const BENEFIT_TYPE = Object.freeze({
-  totalPrice: 'TOTAL_PRICE',
-  desserts: 'DESSERTS',
-  mainCourses: 'MAIN_COURSES',
-  gift: 'GIFT',
+  totalDiscount: 'totalDiscount',
+  menuDiscount: 'menuDiscount',
+  gift: 'gift',
 });
 
 export const CHRISTMAS_D_DAY = {
-  DISCOUNT_BASE_AMOUNT: 1_000,
-  DISCOUNT_PER_DAY: 100,
+  baseDiscountAmount: 1_000,
+  additionalDiscountAmount: 100,
+  type: BENEFIT_TYPE.totalDiscount,
 
-  getBenefit(date) {
+  discountAmount(date) {
+    return this.baseDiscountAmount + this.additionalDiscountAmount * (date - 1);
+  },
+
+  getBenefit() {
     return {
-      type: BENEFIT_TYPE.totalPrice,
-      discountAmount:
-        this.DISCOUNT_BASE_AMOUNT + (date - 1) * this.DISCOUNT_PER_DAY,
+      type: this.type,
+      discountAmount: this.discountAmount,
     };
   },
 
@@ -30,12 +35,17 @@ export const CHRISTMAS_D_DAY = {
 };
 
 export const SPECIAL = {
-  DISCOUNT_BASE_AMOUNT: 1_000,
+  baseDiscountAmount: 1_000,
+  type: BENEFIT_TYPE.totalDiscount,
+
+  discountAmount() {
+    return this.discountAmount;
+  },
 
   getBenefit() {
     return {
-      type: BENEFIT_TYPE.totalPrice,
-      discountAmount: this.DISCOUNT_BASE_AMOUNT,
+      type: this.type,
+      discountAmount: this.discountAmount,
     };
   },
 
@@ -45,14 +55,20 @@ export const SPECIAL = {
 };
 
 export const WEEKDAY = {
-  DISCOUNT_BASE_AMOUNT: 2_023,
+  baseDiscountAmount: 2_023,
+  type: BENEFIT_TYPE.menuDiscount,
 
-  BENEFIT_RANGE: BENEFIT_TYPE.desserts,
+  discountAmount(orders) {
+    return orders.reduce((acc, order) => {
+      if (order.category === DESSERTS)
+        return acc + order.price * this.baseDiscountAmount;
+    }, 0);
+  },
 
   getBenefit() {
     return {
-      type: this.BENEFIT_RANGE,
-      discountAmount: this.DISCOUNT_BASE_AMOUNT,
+      type: this.type,
+      discountAmount: this.discountAmount,
     };
   },
 
@@ -62,14 +78,20 @@ export const WEEKDAY = {
 };
 
 export const WEEKEND = {
-  DISCOUNT_BASE_AMOUNT: 2_023,
+  baseDiscountAmount: 2_023,
+  type: BENEFIT_TYPE.menuDiscount,
 
-  BENEFIT_RANGE: BENEFIT_TYPE.mainCourses,
+  discountAmount(orders) {
+    return orders.reduce((acc, order) => {
+      if (order.category === MAIN_COURSES)
+        return acc + order.price * this.baseDiscountAmount;
+    }, 0);
+  },
 
   getBenefit() {
     return {
-      type: this.BENEFIT_RANGE,
-      discountAmount: this.DISCOUNT_BASE_AMOUNT,
+      type: this.type,
+      discountAmount: this.discountAmount,
     };
   },
 
@@ -79,20 +101,15 @@ export const WEEKEND = {
 };
 
 export const GIFT = {
-  DISCOUNT_BASE_AMOUNT: 25_000,
+  gift: { menu: '샴페인', amount: 1, price: 25_000 },
+  type: BENEFIT_TYPE.gift,
 
-  BENEFIT_RANGE: BENEFIT_TYPE.gift,
-
-  getBenefit(totalPrice) {
-    if (totalPrice >= 120_000) {
-      return { type: BENEFIT_TYPE.gift, gift: this.DISCOUNT_BASE_AMOUNT };
-    }
-
-    return { type: BENEFIT_TYPE.gift, gift: 0 };
+  getBenefit() {
+    return { type: this.type, gift: this.gift };
   },
 
-  isEventAvailable() {
-    return true;
+  isEventAvailable({ totalPrice }) {
+    return totalPrice >= 120_000;
   },
 };
 
