@@ -67,6 +67,9 @@ class ReservationController {
 
     const totalBenefitMoney = await this.#eventPlanner.totalBenefitMoney;
     this.#outputView.printTotalBenefitMoney(totalBenefitMoney);
+
+    const payment = await this.#eventPlanner.payment;
+    this.#outputView.printPayment(payment);
   }
 
   // validators
