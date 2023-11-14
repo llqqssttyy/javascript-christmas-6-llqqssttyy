@@ -17,12 +17,11 @@ const MESSAGES = deepFreeze({
 
     menus: {
       title: '<주문 메뉴>',
-      printMsg: (orders) => {
-        return orders.reduce(
-          (acc, { menu, amount }) => acc + `${menu} ${amount}개\n`,
+      printMsg: (orders) =>
+        orders.reduce(
+          (acc, { menu, amount }) => `${acc}${menu} ${amount}개\n`,
           '',
-        );
-      },
+        ),
     },
 
     originalPrice: {
@@ -46,15 +45,12 @@ const MESSAGES = deepFreeze({
 
         return Object.entries(benefits).reduce((acc, [eventName, benefit]) => {
           if (eventName === 'GIFT')
-            return (
-              acc +
-              `${
-                EVENT_NAMES[eventName]
-              }: -${benefit.price.toLocaleString()}원\n`
-            );
-          return (
-            acc + `${EVENT_NAMES[eventName]}: -${benefit.toLocaleString()}원\n`
-          );
+            return `${acc}${
+              EVENT_NAMES[eventName]
+            }: -${benefit.price.toLocaleString()}원\n`;
+          return `${acc}${
+            EVENT_NAMES[eventName]
+          }: -${benefit.toLocaleString()}원\n`;
         }, '');
       },
     },

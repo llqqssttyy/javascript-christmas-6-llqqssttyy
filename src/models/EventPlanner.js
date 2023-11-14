@@ -97,7 +97,7 @@ class EventPlanner {
   get gift() {
     if (isEmptyObject(this.#benefits)) return null;
 
-    return this.#benefits['GIFT'];
+    return this.#benefits.GIFT;
   }
 
   // 혜택 내역
@@ -113,7 +113,8 @@ class EventPlanner {
 
     return Object.entries(this.#benefits).reduce(
       (acc, [eventName, benefit]) => {
-        return eventName === 'GIFT' ? acc + benefit.price : acc + benefit;
+        if (eventName === 'GIFT') return acc + benefit.price;
+        return acc + benefit;
       },
       0,
     );
@@ -125,7 +126,8 @@ class EventPlanner {
 
     const discountAmount = Object.entries(this.#benefits).reduce(
       (acc, [eventName, benefit]) => {
-        return eventName !== 'GIFT' ? acc + benefit : acc;
+        if (eventName !== 'GIFT') return acc + benefit;
+        return acc;
       },
       0,
     );

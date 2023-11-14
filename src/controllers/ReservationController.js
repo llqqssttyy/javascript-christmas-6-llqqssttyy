@@ -24,8 +24,8 @@ class ReservationController {
   async reservation() {
     this.#outputView.printStart();
 
-    await handleException(async () => await this.#getDate());
-    await handleException(async () => await this.#getOrders());
+    await handleException(async () => this.#getDate());
+    await handleException(async () => this.#getOrders());
 
     this.#printOrderResult();
 
