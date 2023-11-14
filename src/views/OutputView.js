@@ -30,6 +30,10 @@ const OutputView = {
   printBenefits(benefits) {
     this.printResult(MESSAGES.outputs.benefits, benefits);
   },
+
+  printTotalBenefitMoney(money) {
+    this.printResult(MESSAGES.outputs.totalBenefitMoney, money);
+  },
 };
 
 export default OutputView;

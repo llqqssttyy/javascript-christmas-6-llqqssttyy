@@ -29,6 +29,8 @@ class ReservationController {
 
     this.#printOrderResult();
 
+    await this.#eventPlanner.generateBenefits();
+
     this.#printBenefitResult();
   }
 
@@ -57,13 +59,14 @@ class ReservationController {
   }
 
   async #printBenefitResult() {
-    await this.#eventPlanner.generateBenefits();
-
     const gift = await this.#eventPlanner.gift;
     this.#outputView.printGift(gift);
 
     const benefits = await this.#eventPlanner.benefits;
     this.#outputView.printBenefits(benefits);
+
+    const totalBenefitMoney = await this.#eventPlanner.totalBenefitMoney;
+    this.#outputView.printTotalBenefitMoney(totalBenefitMoney);
   }
 
   // validators
