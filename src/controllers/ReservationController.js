@@ -36,7 +36,7 @@ class ReservationController {
     this.#printBadge();
   }
 
-  // use InputView
+  // InputView
   async #getDate() {
     const date = await this.#inputView.readDate();
 
@@ -54,7 +54,7 @@ class ReservationController {
     await this.#eventPlanner.generateReceipt(processedOrders);
   }
 
-  // use OutputView
+  // OutputView
   #printOrderResult() {
     this.#outputView.printMenus(this.#eventPlanner.menus);
     this.#outputView.printOriginalPrice(this.#eventPlanner.originalPrice);

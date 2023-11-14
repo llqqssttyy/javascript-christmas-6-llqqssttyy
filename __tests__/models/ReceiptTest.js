@@ -62,6 +62,20 @@ describe('Recipt 클래스 기능 테스트', () => {
     expect(receipt.receipt).toEqual(RESULT);
   });
 
+  test('접근자 프로퍼티 테스트 - orderCategories', async () => {
+    const INPUT = [
+      { menu: '양송이수프', amount: 1 },
+      { menu: '타파스', amount: 1 },
+      { menu: '바비큐립', amount: 1 },
+    ];
+    const RESULT = ['애피타이저', '메인'];
+
+    const receipt = new Receipt(INPUT);
+    receipt.generateOrders(INPUT);
+
+    expect(receipt.orderCategories).toEqual(RESULT);
+  });
+
   test('접근자 프로퍼티 테스트 - orderCntByCategory', async () => {
     const INPUT = [
       { menu: '양송이수프', amount: 1 },

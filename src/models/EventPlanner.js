@@ -25,7 +25,7 @@ class EventPlanner {
   constructor(date) {
     this.#validate(date);
     this.#visitDate = date;
-    this.#eventCalendar = new EventCalendar(EVENT_YEAR, EVENT_MONTH);
+    this.#eventCalendar = new EventCalendar(EVENT_YEAR, EVENT_MONTH, date);
     this.#benefits = {};
   }
 
@@ -44,13 +44,12 @@ class EventPlanner {
   }
 
   generateBenefits() {
-    const orderCategories = Object.keys(this.#receipt.receipt);
+    const { totalPrice, orderCategories } = this.#receipt;
 
-    this.#eventCalendar.setAvailableEvents(
-      this.#visitDate,
-      this.#receipt.totalPrice,
+    this.#eventCalendar.setAvailableEvents({
+      totalPrice,
       orderCategories,
-    );
+    });
 
     this.#setBenefits();
   }
@@ -112,9 +111,9 @@ class EventPlanner {
     if (isEmptyObject(this.#benefits)) return 0;
 
     return Object.entries(this.#benefits).reduce(
-      (acc, [eventName, benefit]) => {
-        if (eventName === 'GIFT') return acc + benefit.price;
-        return acc + benefit;
+      (totalBenefitMoney, [eventName, benefit]) => {
+        if (eventName === 'GIFT') return totalBenefitMoney + benefit.price;
+        return totalBenefitMoney + benefit;
       },
       0,
     );
@@ -125,9 +124,9 @@ class EventPlanner {
     if (isEmptyObject(this.#benefits)) return this.originalPrice;
 
     const discountAmount = Object.entries(this.#benefits).reduce(
-      (acc, [eventName, benefit]) => {
-        if (eventName !== 'GIFT') return acc + benefit;
-        return acc;
+      (payment, [eventName, benefit]) => {
+        if (eventName !== 'GIFT') return payment + benefit;
+        return payment;
       },
       0,
     );

@@ -19,8 +19,11 @@ describe('EventCalendar 테스트', () => {
     };
 
     // when
-    const eventCalendar = new EventCalendar(YEAR, MONTH);
-    eventCalendar.setAvailableEvents(DATE, TOTAL_PRICE, ORDER_CATEGORIES);
+    const eventCalendar = new EventCalendar(YEAR, MONTH, DATE);
+    eventCalendar.setAvailableEvents({
+      totalPrice: TOTAL_PRICE,
+      orderCategories: ORDER_CATEGORIES,
+    });
 
     //then
     expect(eventCalendar.availableEvents).toEqual(RESULT);

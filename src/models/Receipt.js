@@ -36,9 +36,10 @@ class Receipt {
   }
 
   get totalPrice() {
-    return this.#orderItems.reduce((totalPrice, orderItem) => {
-      return totalPrice + orderItem.totalPrice;
-    }, 0);
+    return this.#orderItems.reduce(
+      (totalPrice, orderItem) => totalPrice + orderItem.totalPrice,
+      0,
+    );
   }
 
   get receipt() {
@@ -55,6 +56,17 @@ class Receipt {
     });
 
     return receipt;
+  }
+
+  get orderCategories() {
+    const categories = new Set();
+
+    this.#orderItems.forEach((orderItem) => {
+      const { category } = orderItem.item;
+      categories.add(category);
+    });
+
+    return [...categories];
   }
 
   get orderCntByCategory() {
