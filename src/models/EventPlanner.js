@@ -11,6 +11,7 @@ import MESSAGES from '../constants/messages.js';
 
 import { isInteger, isNumberInRange } from '../utils/validators.js';
 import throwError from '../utils/throwError.js';
+import { isEmptyObject } from '../utils/object.js';
 
 class EventPlanner {
   #visitDate;
@@ -55,6 +56,8 @@ class EventPlanner {
   }
 
   #setBenefits() {
+    if (this.originalPrice < 10_000) return;
+
     const conditions = {
       orderCntByCategory: this.#receipt.orderCntByCategory,
       date: this.#visitDate,
@@ -76,6 +79,8 @@ class EventPlanner {
     if (money >= 10_000) return '트리';
 
     if (money >= 5000) return '별';
+
+    return '없음';
   }
 
   // 주문 메뉴
@@ -90,16 +95,22 @@ class EventPlanner {
 
   // 증정 메뉴
   get gift() {
+    if (isEmptyObject(this.#benefits)) return null;
+
     return this.#benefits['GIFT'];
   }
 
   // 혜택 내역
   get benefits() {
+    if (isEmptyObject(this.#benefits)) return null;
+
     return this.#benefits;
   }
 
   // 총 혜택 금액
   get totalBenefitMoney() {
+    if (isEmptyObject(this.#benefits)) return 0;
+
     return Object.entries(this.#benefits).reduce(
       (acc, [eventName, benefit]) => {
         return eventName === 'GIFT' ? acc + benefit.price : acc + benefit;
@@ -110,6 +121,8 @@ class EventPlanner {
 
   // 할인 후 예상 결제 금액
   get payment() {
+    if (isEmptyObject(this.#benefits)) return this.originalPrice;
+
     const discountAmount = Object.entries(this.#benefits).reduce(
       (acc, [eventName, benefit]) => {
         return eventName !== 'GIFT' ? acc + benefit : acc;
