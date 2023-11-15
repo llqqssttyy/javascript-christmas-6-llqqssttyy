@@ -44,13 +44,12 @@ const MESSAGES = deepFreeze({
         if (!benefits) return '없음\n';
 
         return Object.entries(benefits).reduce((acc, [eventName, benefit]) => {
-          if (eventName === 'GIFT')
-            return `${acc}${
-              EVENT_NAMES[eventName]
-            }: -${benefit.price.toLocaleString()}원\n`;
-          return `${acc}${
-            EVENT_NAMES[eventName]
-          }: -${benefit.toLocaleString()}원\n`;
+          const formattedBenefit =
+            eventName === 'GIFT'
+              ? `: -${benefit.price.toLocaleString()}원`
+              : `: -${benefit.toLocaleString()}원`;
+
+          return `${acc}${EVENT_NAMES[eventName]}${formattedBenefit}\n`;
         }, '');
       },
     },
