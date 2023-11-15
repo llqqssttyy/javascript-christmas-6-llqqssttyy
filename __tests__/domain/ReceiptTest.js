@@ -1,4 +1,4 @@
-import Receipt from '../../src/models/Receipt';
+import Receipt from '../../src/domain/Receipt';
 
 describe('Recipt 클래스 기능 테스트', () => {
   test.each([

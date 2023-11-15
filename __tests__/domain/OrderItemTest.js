@@ -1,4 +1,4 @@
-import OrderItem from '../../src/models/OrderItem';
+import OrderItem from '../../src/domain/OrderItem';
 
 describe('OrderItem 기능 테스트', () => {
   test('validate - 예외 처리', async () => {

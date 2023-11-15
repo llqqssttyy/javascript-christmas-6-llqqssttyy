@@ -15,9 +15,9 @@ export const BENEFIT_TYPE = Object.freeze({
 
 export const EVENT_NAMES = Object.freeze({
   CHRISTMAS_D_DAY: '크리스마스 디데이 할인',
-  SPECIAL: '특별 할인',
   WEEKDAY: '평일 할인',
   WEEKEND: '주말 할인',
+  SPECIAL: '특별 할인',
   GIFT: '증정 이벤트',
 });
 
@@ -43,29 +43,6 @@ export const CHRISTMAS_D_DAY = {
 
   isEventAvailable({ isChristmasPeriod }) {
     return isChristmasPeriod === true;
-  },
-};
-
-export const SPECIAL = {
-  type: BENEFIT_TYPE.totalDiscount,
-
-  getBenefit() {
-    const discountAmount = 1_000;
-    return {
-      amount: 1,
-      price: discountAmount,
-    };
-  },
-
-  getEvent() {
-    return {
-      name: EVENT_NAMES.SPECIAL,
-      getBenefit: this.getBenefit,
-    };
-  },
-
-  isEventAvailable({ isSpecialDate }) {
-    return isSpecialDate === true;
   },
 };
 
@@ -115,6 +92,29 @@ export const WEEKEND = {
   },
 };
 
+export const SPECIAL = {
+  type: BENEFIT_TYPE.totalDiscount,
+
+  getBenefit() {
+    const discountAmount = 1_000;
+    return {
+      amount: 1,
+      price: discountAmount,
+    };
+  },
+
+  getEvent() {
+    return {
+      name: EVENT_NAMES.SPECIAL,
+      getBenefit: this.getBenefit,
+    };
+  },
+
+  isEventAvailable({ isSpecialDate }) {
+    return isSpecialDate === true;
+  },
+};
+
 export const GIFT = {
   type: BENEFIT_TYPE.gift,
 
@@ -140,8 +140,8 @@ export const GIFT = {
 
 export const ALL_EVENTS = Object.freeze({
   CHRISTMAS_D_DAY,
-  SPECIAL,
   WEEKDAY,
   WEEKEND,
+  SPECIAL,
   GIFT,
 });

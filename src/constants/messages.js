@@ -13,12 +13,13 @@ const MESSAGES = deepFreeze({
   outputs: {
     sayHi: `안녕하세요! 우테코 식당 ${EVENT_MONTH}월 이벤트 플래너입니다.`,
 
-    eventPreview: '12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n',
+    eventPreview: (date) =>
+      `${EVENT_MONTH}월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n`,
 
     menus: {
       title: '<주문 메뉴>',
-      printMsg: (orders) =>
-        orders.reduce(
+      printMsg: (menus) =>
+        menus.reduce(
           (acc, { menu, amount }) => `${acc}${menu} ${amount}개\n`,
           '',
         ),

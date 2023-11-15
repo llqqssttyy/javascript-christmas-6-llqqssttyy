@@ -1,4 +1,4 @@
-import ReservationController from './controllers/ReservationController.js';
+import ReservationController from './services/ReservationController.js';
 
 class App {
   async run() {

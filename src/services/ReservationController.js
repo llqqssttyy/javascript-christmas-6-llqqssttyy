@@ -1,6 +1,6 @@
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
-import EventPlanner from '../models/EventPlanner.js';
+import EventPlanner from './EventPlanner.js';
 
 import MESSAGES from '../constants/messages.js';
 import { ORDER_REGEX } from '../constants/constants.js';
@@ -56,21 +56,18 @@ class ReservationController {
 
   // OutputView
   #printOrderResult() {
-    this.#outputView.printMenus(this.#eventPlanner.menus);
-    this.#outputView.printOriginalPrice(this.#eventPlanner.originalPrice);
+    const { menus, visitDate, originalPrice } = this.#eventPlanner;
+
+    this.#outputView.printMenus({ visitDate, menus });
+    this.#outputView.printOriginalPrice(originalPrice);
   }
 
   async #printBenefitResult() {
-    const gift = await this.#eventPlanner.gift;
+    const { gift, benefits, totalBenefitMoney, payment } = this.#eventPlanner;
+
     this.#outputView.printGift(gift);
-
-    const benefits = await this.#eventPlanner.benefits;
     this.#outputView.printBenefits(benefits);
-
-    const totalBenefitMoney = await this.#eventPlanner.totalBenefitMoney;
     this.#outputView.printTotalBenefitMoney(totalBenefitMoney);
-
-    const payment = await this.#eventPlanner.payment;
     this.#outputView.printPayment(payment);
   }
 

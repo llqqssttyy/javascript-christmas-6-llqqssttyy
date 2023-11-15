@@ -1,5 +1,5 @@
 import { EVENT_NAMES } from '../../src/constants/events';
-import EventPlanner from '../../src/models/EventPlanner';
+import EventPlanner from '../../src/services/EventPlanner';
 
 const ORDERS = [
   { menu: '양송이수프', amount: 1 },

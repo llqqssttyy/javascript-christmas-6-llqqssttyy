@@ -1,5 +1,5 @@
-import EventCalendar from './EventCalendar.js';
-import Receipt from './Receipt.js';
+import EventCalendar from '../domain/EventCalendar.js';
+import Receipt from '../domain/Receipt.js';
 
 import {
   EVENT_MONTH,
@@ -79,6 +79,10 @@ class EventPlanner {
     if (money >= 5000) return '별';
 
     return '없음';
+  }
+
+  get visitDate() {
+    return this.#visitDate;
   }
 
   // 주문 메뉴

@@ -13,10 +13,10 @@ const OutputView = {
     Console.print(MESSAGES.outputs.sayHi);
   },
 
-  printMenus(orders) {
-    Console.print(MESSAGES.outputs.eventPreview);
+  printMenus({ visitDate, menus }) {
+    Console.print(MESSAGES.outputs.eventPreview(visitDate));
 
-    this.printResult(MESSAGES.outputs.menus, orders);
+    this.printResult(MESSAGES.outputs.menus, menus);
   },
 
   printOriginalPrice(price) {

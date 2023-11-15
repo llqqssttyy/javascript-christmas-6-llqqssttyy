@@ -1,4 +1,4 @@
-import EventCalendar from '../../src/models/EventCalendar';
+import EventCalendar from '../../src/domain/EventCalendar';
 
 import {
   CHRISTMAS_D_DAY,
