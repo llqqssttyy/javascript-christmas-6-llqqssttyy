@@ -1,5 +1,5 @@
 import deepFreeze from '../utils/deepFreeze.js';
-import { EVENT_MONTH, EVENT_NAMES } from './events.js';
+import { EVENT_MONTH } from './events.js';
 
 const MESSAGES = deepFreeze({
   // InputView
@@ -43,14 +43,11 @@ const MESSAGES = deepFreeze({
       printMsg: (benefits) => {
         if (!benefits) return '없음\n';
 
-        return Object.entries(benefits).reduce((acc, [eventName, benefit]) => {
-          const formattedBenefit =
-            eventName === 'GIFT'
-              ? `: -${benefit.price.toLocaleString()}원`
-              : `: -${benefit.toLocaleString()}원`;
-
-          return `${acc}${EVENT_NAMES[eventName]}${formattedBenefit}\n`;
-        }, '');
+        return Object.entries(benefits).reduce(
+          (acc, [eventName, { amount, price }]) =>
+            `${acc}${eventName}: -${amount * price}원\n`,
+          '',
+        );
       },
     },
 

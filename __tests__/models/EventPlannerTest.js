@@ -1,3 +1,4 @@
+import { EVENT_NAMES } from '../../src/constants/events';
 import EventPlanner from '../../src/models/EventPlanner';
 
 const ORDERS = [
@@ -41,10 +42,10 @@ describe('EventPlanner 혜택 조회 테스트', () => {
 
   test('접근자 프로퍼티 테스트 - benefits', async () => {
     const benefits = {
-      CHRISTMAS_D_DAY: 3400,
-      SPECIAL: 1000,
-      WEEKDAY: 4046,
-      GIFT: {
+      [EVENT_NAMES.CHRISTMAS_D_DAY]: { amount: 1, price: 3400 },
+      [EVENT_NAMES.SPECIAL]: { amount: 1, price: 1000 },
+      [EVENT_NAMES.WEEKDAY]: { amount: 2, price: 2023 },
+      [EVENT_NAMES.GIFT]: {
         menu: '샴페인',
         amount: 1,
         price: 25_000,

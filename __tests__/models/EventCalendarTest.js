@@ -1,6 +1,11 @@
 import EventCalendar from '../../src/models/EventCalendar';
 
-import { CHRISTMAS_D_DAY, GIFT, SPECIAL } from '../../src/constants/events';
+import {
+  CHRISTMAS_D_DAY,
+  EVENT_NAMES,
+  GIFT,
+  SPECIAL,
+} from '../../src/constants/events';
 import { MAIN_COURSES } from '../../src/constants/menus';
 
 describe('EventCalendar 테스트', () => {
@@ -13,9 +18,9 @@ describe('EventCalendar 테스트', () => {
     const ORDER_CATEGORIES = [MAIN_COURSES];
 
     const RESULT = {
-      CHRISTMAS_D_DAY: CHRISTMAS_D_DAY.getBenefit(),
-      SPECIAL: SPECIAL.getBenefit(),
-      GIFT: GIFT.getBenefit(),
+      [EVENT_NAMES.CHRISTMAS_D_DAY]: CHRISTMAS_D_DAY.getEvent().getBenefit,
+      [EVENT_NAMES.SPECIAL]: SPECIAL.getEvent().getBenefit,
+      [EVENT_NAMES.GIFT]: GIFT.getEvent().getBenefit,
     };
 
     // when

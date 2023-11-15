@@ -24,17 +24,20 @@ export const EVENT_NAMES = Object.freeze({
 export const CHRISTMAS_D_DAY = {
   type: BENEFIT_TYPE.totalDiscount,
 
-  discountAmount({ date }) {
+  getBenefit({ date }) {
     const baseAmount = 1000;
     const weightAmount = 100;
 
-    return baseAmount + weightAmount * (date - 1);
+    return {
+      amount: 1,
+      price: baseAmount + weightAmount * (date - 1),
+    };
   },
 
-  getBenefit() {
+  getEvent() {
     return {
-      type: this.type,
-      discountAmount: this.discountAmount,
+      name: EVENT_NAMES.CHRISTMAS_D_DAY,
+      getBenefit: this.getBenefit,
     };
   },
 
@@ -46,15 +49,18 @@ export const CHRISTMAS_D_DAY = {
 export const SPECIAL = {
   type: BENEFIT_TYPE.totalDiscount,
 
-  discountAmount() {
+  getBenefit() {
     const discountAmount = 1_000;
-    return discountAmount;
+    return {
+      amount: 1,
+      price: discountAmount,
+    };
   },
 
-  getBenefit() {
+  getEvent() {
     return {
-      type: this.type,
-      discountAmount: this.discountAmount,
+      name: EVENT_NAMES.SPECIAL,
+      getBenefit: this.getBenefit,
     };
   },
 
@@ -66,15 +72,18 @@ export const SPECIAL = {
 export const WEEKDAY = {
   type: BENEFIT_TYPE.menuDiscount,
 
-  discountAmount({ orderCntByCategory }) {
+  getBenefit({ orderCntByCategory }) {
     const discountAmount = 2_023;
-    return orderCntByCategory[DESSERTS] * discountAmount;
+    return {
+      amount: orderCntByCategory[DESSERTS],
+      price: discountAmount,
+    };
   },
 
-  getBenefit() {
+  getEvent() {
     return {
-      type: this.type,
-      discountAmount: this.discountAmount,
+      name: EVENT_NAMES.WEEKDAY,
+      getBenefit: this.getBenefit,
     };
   },
 
@@ -86,15 +95,18 @@ export const WEEKDAY = {
 export const WEEKEND = {
   type: BENEFIT_TYPE.menuDiscount,
 
-  discountAmount({ orderCntByCategory }) {
+  getBenefit({ orderCntByCategory }) {
     const discountAmount = 2_023;
-    return orderCntByCategory[MAIN_COURSES] * discountAmount;
+    return {
+      amount: orderCntByCategory[MAIN_COURSES],
+      price: discountAmount,
+    };
   },
 
-  getBenefit() {
+  getEvent() {
     return {
-      type: this.type,
-      discountAmount: this.discountAmount,
+      name: EVENT_NAMES.WEEKEND,
+      getBenefit: this.getBenefit,
     };
   },
 
@@ -104,11 +116,21 @@ export const WEEKEND = {
 };
 
 export const GIFT = {
-  gift: { menu: '샴페인', amount: 1, price: 25_000 },
   type: BENEFIT_TYPE.gift,
 
   getBenefit() {
-    return { type: this.type, gift: this.gift };
+    return {
+      menu: '샴페인',
+      amount: 1,
+      price: 25_000,
+    };
+  },
+
+  getEvent() {
+    return {
+      name: EVENT_NAMES.GIFT,
+      getBenefit: this.getBenefit,
+    };
   },
 
   isEventAvailable({ totalPrice }) {

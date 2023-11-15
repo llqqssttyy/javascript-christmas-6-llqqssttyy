@@ -20,9 +20,11 @@ class EventCalendar {
   async setAvailableEvents({ totalPrice, orderCategories }) {
     const state = this.#getState(totalPrice, orderCategories);
 
-    await Object.entries(ALL_EVENTS).forEach(([eventName, event]) => {
+    await Object.values(ALL_EVENTS).forEach((event) => {
+      const { name, getBenefit } = event.getEvent();
+
       if (event.isEventAvailable(state))
-        this.#availableEvents[eventName] = event.getBenefit();
+        this.#availableEvents[name] = getBenefit;
     });
   }
 

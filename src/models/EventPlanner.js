@@ -2,8 +2,8 @@ import EventCalendar from './EventCalendar.js';
 import Receipt from './Receipt.js';
 
 import {
-  BENEFIT_TYPE,
   EVENT_MONTH,
+  EVENT_NAMES,
   EVENT_PERIOD,
   EVENT_YEAR,
 } from '../constants/events.js';
@@ -63,9 +63,8 @@ class EventPlanner {
     };
 
     Object.entries(this.#eventCalendar.availableEvents).forEach(
-      ([eventName, { type, discountAmount, gift }]) => {
-        this.#benefits[eventName] =
-          type === BENEFIT_TYPE.gift ? gift : discountAmount(conditions);
+      ([eventName, getBenefit]) => {
+        this.#benefits[eventName] = getBenefit(conditions);
       },
     );
   }
@@ -96,7 +95,7 @@ class EventPlanner {
   get gift() {
     if (isEmptyObject(this.#benefits)) return null;
 
-    return this.#benefits.GIFT;
+    return this.#benefits[EVENT_NAMES.GIFT];
   }
 
   // 혜택 내역
@@ -110,11 +109,9 @@ class EventPlanner {
   get totalBenefitMoney() {
     if (isEmptyObject(this.#benefits)) return 0;
 
-    return Object.entries(this.#benefits).reduce(
-      (totalBenefitMoney, [eventName, benefit]) => {
-        if (eventName === 'GIFT') return totalBenefitMoney + benefit.price;
-        return totalBenefitMoney + benefit;
-      },
+    return Object.values(this.#benefits).reduce(
+      (totalBenefitMoney, { amount, price }) =>
+        totalBenefitMoney + amount * price,
       0,
     );
   }
@@ -124,8 +121,8 @@ class EventPlanner {
     if (isEmptyObject(this.#benefits)) return this.originalPrice;
 
     const discountAmount = Object.entries(this.#benefits).reduce(
-      (payment, [eventName, benefit]) => {
-        if (eventName !== 'GIFT') return payment + benefit;
+      (payment, [eventName, { amount, price }]) => {
+        if (eventName !== EVENT_NAMES.GIFT) return payment + amount * price;
         return payment;
       },
       0,
