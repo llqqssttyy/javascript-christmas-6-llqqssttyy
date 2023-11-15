@@ -20,7 +20,7 @@ export const shallowEqual = (objA, objB) => {
 };
 
 /**
- * 중첩 객체의 값을 필드를 사용해서 탐색 후 반환하는 함수
+ * 점 표기법(.)을 사용해서 중첩 객체의 값을 찾는 함수
  * 참고: https://elvanov.com/2286
  * @param {object} obj
  * @param {string} field

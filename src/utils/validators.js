@@ -9,8 +9,6 @@ export const isNumberInRange = (min, max, number) =>
 
 export const isInteger = (number) => Number.isInteger(number);
 
-export const isPositive = (number) => number > 0;
-
 // Validate Orders
 export const isValidFormat = (regex, string) => {
   const reg = new RegExp(regex);

@@ -1,19 +1,20 @@
 import EventPlanner from '../../src/models/EventPlanner';
 
-async function getEventPlanner() {
+const ORDERS = [
+  { menu: '양송이수프', amount: 1 },
+  { menu: '타파스', amount: 1 },
+  { menu: '티본스테이크', amount: 2 },
+  { menu: '초코케이크', amount: 1 },
+  { menu: '아이스크림', amount: 1 },
+];
+
+async function getEventPlanner(orders) {
   // given
   const VISIT_DATE = 25;
-  const ORDERS = [
-    { menu: '양송이수프', amount: 1 },
-    { menu: '타파스', amount: 1 },
-    { menu: '티본스테이크', amount: 2 },
-    { menu: '초코케이크', amount: 1 },
-    { menu: '아이스크림', amount: 1 },
-  ];
 
   // when
   const eventPlanner = new EventPlanner(VISIT_DATE);
-  await eventPlanner.generateReceipt(ORDERS);
+  await eventPlanner.generateReceipt(orders);
   await eventPlanner.generateBenefits();
 
   return eventPlanner;
@@ -33,7 +34,7 @@ describe('EventPlanner 혜택 조회 테스트', () => {
       price: 25_000,
     };
 
-    const eventPlanner = await getEventPlanner();
+    const eventPlanner = await getEventPlanner(ORDERS);
 
     expect(eventPlanner.gift).toEqual(gift);
   });
@@ -50,7 +51,7 @@ describe('EventPlanner 혜택 조회 테스트', () => {
       },
     };
 
-    const eventPlanner = await getEventPlanner();
+    const eventPlanner = await getEventPlanner(ORDERS);
 
     expect(eventPlanner.benefits).toEqual(benefits);
   });
@@ -58,7 +59,7 @@ describe('EventPlanner 혜택 조회 테스트', () => {
   test('접근자 프로퍼티 테스트 - totalBenefitMoney', async () => {
     const totalBenefitMoney = 33_446;
 
-    const eventPlanner = await getEventPlanner();
+    const eventPlanner = await getEventPlanner(ORDERS);
 
     expect(eventPlanner.totalBenefitMoney).toBe(totalBenefitMoney);
   });
@@ -67,15 +68,48 @@ describe('EventPlanner 혜택 조회 테스트', () => {
     const originalPrice = 141_500;
     const discountAmount = 8_446;
 
-    const eventPlanner = await getEventPlanner();
+    const eventPlanner = await getEventPlanner(ORDERS);
 
     expect(eventPlanner.payment).toBe(originalPrice - discountAmount);
   });
 
-  test('접근자 프로퍼티 테스트 - badge', async () => {
-    const badge = '산타';
-
-    const eventPlanner = await getEventPlanner();
+  test.each([
+    {
+      orders: [
+        { menu: '양송이수프', amount: 1 },
+        { menu: '타파스', amount: 1 },
+        { menu: '티본스테이크', amount: 2 },
+        { menu: '초코케이크', amount: 1 },
+        { menu: '아이스크림', amount: 1 },
+      ],
+      badge: '산타',
+    },
+    {
+      orders: [
+        { menu: '양송이수프', amount: 1 },
+        { menu: '타파스', amount: 1 },
+        { menu: '티본스테이크', amount: 1 },
+        { menu: '아이스크림', amount: 4 },
+      ],
+      badge: '트리',
+    },
+    {
+      orders: [
+        { menu: '양송이수프', amount: 1 },
+        { menu: '타파스', amount: 1 },
+        { menu: '아이스크림', amount: 1 },
+      ],
+      badge: '별',
+    },
+    {
+      orders: [
+        { menu: '양송이수프', amount: 1 },
+        { menu: '타파스', amount: 1 },
+      ],
+      badge: '없음',
+    },
+  ])('접근자 프로퍼티 테스트 - badge', async ({ orders, badge }) => {
+    const eventPlanner = await getEventPlanner(orders);
 
     expect(eventPlanner.badge).toBe(badge);
   });
