@@ -1,9 +1,7 @@
-import { BENEFIT_TYPE, EVENT_NAMES } from '../constants/event.js';
+import { EVENT_NAMES } from '../constants/event.js';
 import { DESSERTS, MAIN_COURSES } from '../constants/menus.js';
 
 export const CHRISTMAS_D_DAY = {
-  type: BENEFIT_TYPE.totalDiscount,
-
   getBenefit({ date }) {
     const baseAmount = 1000;
     const weightAmount = 100;
@@ -27,8 +25,6 @@ export const CHRISTMAS_D_DAY = {
 };
 
 export const WEEKDAY = {
-  type: BENEFIT_TYPE.menuDiscount,
-
   getBenefit({ orderCntByCategory }) {
     const discountAmount = 2_023;
     return {
@@ -50,8 +46,6 @@ export const WEEKDAY = {
 };
 
 export const WEEKEND = {
-  type: BENEFIT_TYPE.menuDiscount,
-
   getBenefit({ orderCntByCategory }) {
     const discountAmount = 2_023;
     return {
@@ -73,8 +67,6 @@ export const WEEKEND = {
 };
 
 export const SPECIAL = {
-  type: BENEFIT_TYPE.totalDiscount,
-
   getBenefit() {
     const discountAmount = 1_000;
     return {
@@ -96,8 +88,6 @@ export const SPECIAL = {
 };
 
 export const GIFT = {
-  type: BENEFIT_TYPE.gift,
-
   getBenefit() {
     return {
       menu: '샴페인',
