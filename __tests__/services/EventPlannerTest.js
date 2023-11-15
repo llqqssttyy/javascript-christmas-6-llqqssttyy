@@ -1,4 +1,4 @@
-import { EVENT_NAMES } from '../../src/constants/events';
+import { EVENT_NAMES } from '../../src/constants/event';
 import EventPlanner from '../../src/services/EventPlanner';
 
 const ORDERS = [

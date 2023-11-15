@@ -6,7 +6,7 @@ import {
   EVENT_NAMES,
   EVENT_PERIOD,
   EVENT_YEAR,
-} from '../constants/events.js';
+} from '../constants/event.js';
 import MESSAGES from '../constants/messages.js';
 
 import { isInteger, isNumberInRange } from '../utils/validators.js';

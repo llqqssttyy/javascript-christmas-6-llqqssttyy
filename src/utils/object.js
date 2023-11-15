@@ -32,11 +32,7 @@ export const getValueOfField = (obj, field) => {
 
   const keys = field.split('.');
 
-  return keys.reduce((curObj, curKey) => {
-    return curObj ? curObj[curKey] : null;
-  }, obj);
+  return keys.reduce((curObj, curKey) => (curObj ? curObj[curKey] : null), obj);
 };
 
-export const isEmptyObject = (obj) => {
-  return JSON.stringify(obj) === '{}';
-};
+export const isEmptyObject = (obj) => JSON.stringify(obj) === '{}';

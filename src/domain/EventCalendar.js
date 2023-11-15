@@ -1,5 +1,6 @@
 import { FRIDAY, SATURDAY, SPECIAL_DATES } from '../constants/calendar.js';
-import { ALL_EVENTS, EVENT_PERIOD } from '../constants/events.js';
+import { EVENT_PERIOD } from '../constants/event.js';
+import { ALL_EVENTS } from './Events.js';
 
 class EventCalendar {
   #year;

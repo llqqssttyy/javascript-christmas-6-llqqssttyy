@@ -1,18 +1,18 @@
 import EventCalendar from '../../src/domain/EventCalendar';
+import { CHRISTMAS_D_DAY, GIFT, SPECIAL } from '../../src/domain/Events';
 
 import {
-  CHRISTMAS_D_DAY,
+  EVENT_MONTH,
   EVENT_NAMES,
-  GIFT,
-  SPECIAL,
-} from '../../src/constants/events';
+  EVENT_YEAR,
+} from '../../src/constants/event';
 import { MAIN_COURSES } from '../../src/constants/menus';
 
 describe('EventCalendar 테스트', () => {
   test('getEventBenefit 기능 테스트', () => {
     // given
-    const YEAR = 2023;
-    const MONTH = 12;
+    const YEAR = EVENT_YEAR;
+    const MONTH = EVENT_MONTH;
     const DATE = 25;
     const TOTAL_PRICE = 130_000;
     const ORDER_CATEGORIES = [MAIN_COURSES];
